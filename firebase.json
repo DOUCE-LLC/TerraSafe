@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/venv/**",
+      "**/Data/**",
+      "**/Data Analytics/**",
+      "**/Data Cleaning/**",
+      "**/Machine Learning/**",
+      "**/Web Scrapping and Extraction/**"
+    ]
+  }
+}

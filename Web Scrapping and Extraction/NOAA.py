@@ -1,20 +1,8 @@
-#!/usr/bin/env python
-"""Query NCEI's Hazard Event Lookup (HazEL) API for earthquake information.  See the API documentation at
-   https://www.ngdc.noaa.gov/hazel/view/swagger on how to perform this and other queries.
-"""
-# Module loading
 import argparse
 import json
 import requests
 import time as clock
-
-__author__ = "Aaron Sweeney"
-__credits__ = ["Aaron Sweeney"]
-__license__ = "GNU General Public License, version 3.0"
-__version__ = "1.0"
-__email__ = "aaron.sweeney@colorado.edu"
-__status__ = "Development"
-
+import pandas as pd
 
 def get_earthquakes(min_year, max_year, min_eq_magnitude):
     """Return information about all earthquakes occurring between min_year and max_year and greater than
@@ -47,33 +35,34 @@ def get_earthquakes(min_year, max_year, min_eq_magnitude):
 
     return data
 
-
 if __name__ == "__main__":
 
     # Let's track how long this takes.
     program_start_time = clock.time()
 
-    parser = argparse.ArgumentParser(
-        description='Query the NCEI Hazard Event Lookup (HazEL) API for earthquakes, based on a given '
-                    'min/max year and minimum magnitude.'
-        )
-    parser.add_argument('-y1', '--min_year', metavar='min_year', type=int,
-                        required=True, help='Minimum year for query.')
-    parser.add_argument('-y2', '--max_year', metavar='max_year', type=int,
-                        required=True, help='Maximum year for query.')
-    parser.add_argument('-m1', '--min_eq_magnitude', metavar='min_eq_magnitude', type=float,
-                        required=True, help='Minimum earthquake magnitude for query.')
-    args = parser.parse_args()
-
-    min_year = args.min_year
-    max_year = args.max_year
-    min_eq_magnitude = args.min_eq_magnitude
+    min_year = 0
+    max_year = 2023
+    min_eq_magnitude = 1
 
     results = get_earthquakes(min_year, max_year, min_eq_magnitude)
 
-    # Print JSON with human-readable spacing:
-    print(json.dumps(results, sort_keys=True, indent=4, separators=(',', ': ')))
+    # Crear una lista para almacenar los registros en el formato adecuado
+    records = []
 
-    # Capture the program's execution time.
+    # Obtener la clave "items" del resultado
+    items = results["items"]
+
+    # Iterar sobre los elementos de la lista y convertirlos al formato adecuado
+    for item in items:
+        record = json.loads(json.dumps(item))
+        records.append(record)
+
+    # Crear el DataFrame con las columnas especificadas
+    df = pd.DataFrame(records, columns=['id', 'year', 'month', 'day', 'hour', 'locationName', 'latitude', 'longitude', 'eqMagnitude', 'eqDepth', 'damageAmountOrder', 'damageMillionsDollars', 'publish', 'housesDestroyedAmountOrderTotal', 'country', 'deathsAmountOrder', 'injuriesAmountOrderTotal', 'intensity'])
+
+    # Guardar el DataFrame en un archivo CSV
+    df.to_csv("../Data/Raw data/NOAA.csv", index=False)
+
+    # Capturar el tiempo de ejecución del programa.
     elapsed_time = clock.time() - program_start_time
-    print('Program Execution Time [s]: {:0.3f}'.format(elapsed_time))
+    print('Tiempo de ejecución del programa [s]: {:0.3f}'.format(elapsed_time))
