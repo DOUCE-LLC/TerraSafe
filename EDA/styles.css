@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+  
+header {
+    background-color: #000;
+    padding: 30px;
+    color: #ddd;
+    text-align: left;
+}
+  
+.eda-description-routes {
+    background-color: #f4f4f4;
+    min-width: 100%;
+    min-height: 100%;
+    padding: 10px;
+}
+  
+.a-container {
+    display: inline-block;
+    margin: 10px 5px;
+}
+  
+.a-container a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+  
+.a-container a:hover {
+    background-color: #ddd;
+}
+  
+.eda-main {
+    padding: 30px;
+    font-family: Arial, sans-serif;
+}
+  
+.eda-description {
+    margin-bottom: 20px;
+}
+  
+.eda-description h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+  
+.eda-description p {
+    font-size: 16px;
+}
