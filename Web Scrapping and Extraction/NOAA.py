@@ -58,10 +58,11 @@ if __name__ == "__main__":
         records.append(record)
 
     # Crear el DataFrame con las columnas especificadas
-    df = pd.DataFrame(records, columns=['id', 'year', 'month', 'day', 'hour', 'locationName', 'latitude', 'longitude', 'eqMagnitude', 'eqDepth', 'damageAmountOrder', 'damageMillionsDollars', 'publish', 'housesDestroyedAmountOrderTotal', 'country', 'deathsAmountOrder', 'injuriesAmountOrderTotal', 'intensity'])
+    # df = pd.DataFrame(records, columns=['id', 'year', 'month', 'day', 'hour', 'locationName', 'latitude', 'longitude', 'eqMagnitude', 'eqDepth', 'damageAmountOrder', 'damageMillionsDollars', 'publish', 'housesDestroyedAmountOrderTotal', 'country', 'deathsAmountOrder', 'injuriesAmountOrderTotal', 'intensity'])
+    df = pd.DataFrame(records)
 
     # Guardar el DataFrame en un archivo CSV
-    df.to_csv("../Data/Raw data/NOAA.csv", index=False)
+    df.to_csv("../Data/Raw data/Raw_NOAA.csv", index=False)
 
     # Capturar el tiempo de ejecución del programa.
     elapsed_time = clock.time() - program_start_time
