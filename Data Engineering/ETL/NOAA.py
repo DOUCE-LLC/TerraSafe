@@ -274,8 +274,6 @@ def fillUpdatedDamage2(df):
                 df.at[index, 'updatedDamageAmountOrder'] = 4
     return df
 
-
-# def loadAPI(min_year, max_year, min_eq_magnitude, country):
 def loadAPI(min_year, max_year, min_eq_magnitude):
 
     api = "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes"
@@ -284,7 +282,6 @@ def loadAPI(min_year, max_year, min_eq_magnitude):
         'minYear': str(min_year),
         'maxYear': str(max_year),
         'minEqMagnitude': str(min_eq_magnitude)
-        # 'country': country
     }
 
     data = []
@@ -336,11 +333,7 @@ def loadAPI(min_year, max_year, min_eq_magnitude):
     df = fillUpdatedDamage2(df)
     df = dropDamageColumns(df)
 
-    # df.to_csv(f"./demos/NOAA_{country}_{min_year}_{max_year}.csv", index=False)
-    df.to_csv(f"./demos/NOAA_{min_year}_{max_year}.csv", index=False)
+    df.to_csv("../../Data/Cleaned data/NOAA.csv", index=False)
     print('')
 
-# loadAPI(0, 2023, 0, 'CHILE')
-# loadAPI(0, 2023, 0, 'USA')
-# loadAPI(0, 2023, 0, 'JAPAN')
 loadAPI(0, 2023, 0)
