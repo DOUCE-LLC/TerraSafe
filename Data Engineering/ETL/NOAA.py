@@ -6,7 +6,7 @@ import numpy as np
 # Interfaz grafica: https://www.ngdc.noaa.gov/hazel/view/hazards/earthquake/search
 
 def dropUnnecessaryColumns(df):
-    columns_to_drop = ['id', 'publish', 'regionCode', 'eqMagMw', 'eqMagMb', 'eqMagUnk', 'eqMagMl', 'volcanoEventId', 'tsunamiEventId', 'eqMagMfa', 'eqMagMs', 'hour', 'second', 'minute', 'missing', 'missingAmountOrder', 'missingTotal', 'missingAmountOrderTotal', 'area']
+    columns_to_drop = ['id', 'publish', 'regionCode', 'eqMagMw', 'eqMagMb', 'eqMagUnk', 'eqMagMl', 'eqMagMfa', 'eqMagMs', 'hour', 'second', 'minute', 'missing', 'missingAmountOrder', 'missingTotal', 'missingAmountOrderTotal', 'area']
     df.drop(columns=columns_to_drop, inplace=True)
     return df
 
@@ -274,6 +274,12 @@ def fillUpdatedDamage2(df):
                 df.at[index, 'updatedDamageAmountOrder'] = 4
     return df
 
+def tsunamisAndVolcanos(df):
+    columns = ['volcanoEventId', 'tsunamiEventId']
+    df[columns] = df[columns].fillna(0).astype(bool).astype(int)
+    df.rename(columns={'volcanoEventId': 'volcano', 'tsunamiEventId': 'tsunami'}, inplace=True)
+    return df
+
 def loadAPI(min_year, max_year, min_eq_magnitude):
 
     api = "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes"
@@ -332,6 +338,7 @@ def loadAPI(min_year, max_year, min_eq_magnitude):
     df = fillUpdatedDamage(df)
     df = fillUpdatedDamage2(df)
     df = dropDamageColumns(df)
+    df = tsunamisAndVolcanos(df)
 
     df.to_csv("../../Data/Cleaned data/NOAA.csv", index=False)
     print('')
