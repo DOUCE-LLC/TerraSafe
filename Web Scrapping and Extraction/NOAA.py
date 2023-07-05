@@ -5,22 +5,9 @@ import time as clock
 import pandas as pd
 
 def get_earthquakes(min_year, max_year, min_eq_magnitude):
-    """Return information about all earthquakes occurring between min_year and max_year and greater than
-    min_eq_magnitude. Consult the API docs at https://www.ngdc.noaa.gov/hazel/view/swagger for details.
-
-    Args:
-      min_year (int): minimum year of earthquake query
-      max_year (int): maximum year of earthquake query
-      min_eq_magnitude (float): minimum earthquake magnitude of query
-
-    Returns:
-      dict containing query results [JSON]
-    """
-    # Define components of Hazard Event Lookup (HazEL) query:
     protocol = "https://"
     host = "www.ngdc.noaa.gov"
     service = "/hazel/hazard-service/api/v1/earthquakes"
-    # Consult the API docs at https://www.ngdc.noaa.gov/hazel/view/swagger for different "service" endpoints.
 
     payload = {
         'minYear': str(min_year),
@@ -37,7 +24,6 @@ def get_earthquakes(min_year, max_year, min_eq_magnitude):
 
 if __name__ == "__main__":
 
-    # Let's track how long this takes.
     program_start_time = clock.time()
 
     min_year = 0
@@ -46,24 +32,18 @@ if __name__ == "__main__":
 
     results = get_earthquakes(min_year, max_year, min_eq_magnitude)
 
-    # Crear una lista para almacenar los registros en el formato adecuado
     records = []
 
-    # Obtener la clave "items" del resultado
     items = results["items"]
 
-    # Iterar sobre los elementos de la lista y convertirlos al formato adecuado
     for item in items:
         record = json.loads(json.dumps(item))
         records.append(record)
 
-    # Crear el DataFrame con las columnas especificadas
     # df = pd.DataFrame(records, columns=['id', 'year', 'month', 'day', 'hour', 'locationName', 'latitude', 'longitude', 'eqMagnitude', 'eqDepth', 'damageAmountOrder', 'damageMillionsDollars', 'publish', 'housesDestroyedAmountOrderTotal', 'country', 'deathsAmountOrder', 'injuriesAmountOrderTotal', 'intensity'])
     df = pd.DataFrame(records)
 
-    # Guardar el DataFrame en un archivo CSV
     df.to_csv("../Data/Raw data/Raw_NOAA.csv", index=False)
 
-    # Capturar el tiempo de ejecución del programa.
     elapsed_time = clock.time() - program_start_time
     print('Tiempo de ejecución del programa [s]: {:0.3f}'.format(elapsed_time))
