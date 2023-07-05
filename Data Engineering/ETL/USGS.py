@@ -98,6 +98,9 @@ def filter_records_by_type(df):
     df = df[df['earthquakeType'] == 'earthquake']
     return df
 
+def obtener_pais_desde_place(df):
+    df['country'] = df['place'].str.split(',').str[-1].str.strip()
+    return df
 
 #####################################################################################################
 
@@ -152,6 +155,7 @@ def create_dataset(start_year, end_year):
                     df = replace_null_with_median_dmin(df)
                     df = separar_coordenadas(df)
                     df = replace_negative_with_absolute(df)
+                    df = obtener_pais_desde_place(df)
 
                     df.sort_values(by=['time'], ascending=True, inplace=True)
                     df1 = pd.concat([df1, df]).drop_duplicates().reset_index(drop=True)
