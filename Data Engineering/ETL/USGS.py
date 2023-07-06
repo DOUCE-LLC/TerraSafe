@@ -167,7 +167,7 @@ def process_place_data(df):
     "wisconsin", "wi",
     "wyoming", "wy"
 ]   
-    df['Country'] = df['Country'].map(lambda x: 'United States' if x in usa_cities else x)
+    df['Country'] = df['Country'].map(lambda x: 'united states' if x in usa_cities else x)
     return df
 
 
