@@ -253,4 +253,4 @@ def create_dataset(start_year, end_year):
     blob.upload_from_string(csv_buffer, content_type="text/csv")
 
 current_year = datetime.now().year
-create_dataset(0, current_year)
+create_dataset(1900, current_year)
