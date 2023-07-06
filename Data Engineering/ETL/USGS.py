@@ -72,7 +72,7 @@ def change_time_format(df):
 
 # Por valor absoluto
 def replace_negative_with_absolute(df):
-    df['depth'] = df['depth'].abs()
+    df['depth'] = df['depth'].fillna(0).abs()
     df['mag'] = df['mag'].abs()
     return df
 
