@@ -179,7 +179,7 @@ def create_dataset(start_year, end_year):
     df1 = pd.DataFrame()
 
     for year in range(start_year, end_year+1):
-        for month in range(1, 3):
+        for month in range(1, 13):
             for day in range(1, 32):
                 df = pd.DataFrame()
                 url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
