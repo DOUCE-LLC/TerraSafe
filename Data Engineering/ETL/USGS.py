@@ -6,11 +6,12 @@ import json
 
 api_key = "5e97aa77f5324945a2863959710ee2ad"
 
-"""Funcion para eliminar columnas"""
+"""Eliminar columnas"""
 def remove_column(df, column_name):
     df.drop(column_name, axis=1, inplace=True)
     return df
 
+"""Separar coordenadas"""
 def separar_coordenadas(df):
     # Obtener los valores de la columna "coordinates" como una lista de listas
     coordinates = df['coordinates'].tolist()
@@ -28,6 +29,7 @@ def separar_coordenadas(df):
 
     return df
 
+"""Cambiar formato de fechas"""
 def change_time_format(df):
     df['time'] = df['time'].astype(str).apply(lambda x: datetime.fromtimestamp(int(x) / 1000).strftime('%Y-%m-%d'))
     return df
@@ -63,8 +65,70 @@ def agregar_pais_al_dataframe(df):
     df['country'] = df.apply(lambda row: obtener_pais(row['latitude'], row['longitude']), axis=1)
     return df
 
-"""Arreglamos profundidades negativas"""
+"""Crear columna pais a partir de columna place"""
+def process_place_data(df):
+    
+    df['Country'] = df['place'].str.split(',', n=1).str[-1].str.strip().str.lower()
+    df['Country'] = df['Country'].fillna(df['place'])  
+    
+    #usa_cities = ["california", "ca", "alaska", "ak", "hawaii", "hi", "washington", "wa", "oregon", "or", "nevada", "nv", "idaho", "id"]
 
+    usa_cities = [
+    "alabama", "al",
+    "alaska", "ak",
+    "arizona", "az",
+    "arkansas", "ar",
+    "california", "ca",
+    "colorado", "co",
+    "connecticut", "ct",
+    "delaware", "de",
+    "florida", "fl",
+    "georgia", "ga",
+    "hawaii", "hi",
+    "idaho", "id",
+    "illinois", "il",
+    "indiana", "in",
+    "iowa", "ia",
+    "kansas", "ks",
+    "kentucky", "ky",
+    "louisiana", "la",
+    "maine", "me",
+    "maryland", "md",
+    "massachusetts", "ma",
+    "michigan", "mi",
+    "minnesota", "mn",
+    "mississippi", "ms",
+    "missouri", "mo",
+    "montana", "mt",
+    "nebraska", "ne",
+    "nevada", "nv",
+    "new hampshire", "nh",
+    "new jersey", "nj",
+    "new mexico", "nm",
+    "new york", "ny",
+    "north carolina", "nc",
+    "north dakota", "nd",
+    "ohio", "oh",
+    "oklahoma", "ok",
+    "oregon", "or",
+    "pennsylvania", "pa",
+    "rhode island", "ri",
+    "south carolina", "sc",
+    "south dakota", "sd",
+    "tennessee", "tn",
+    "texas", "tx",
+    "utah", "ut",
+    "vermont", "vt",
+    "virginia", "va",
+    "washington", "wa",
+    "west virginia", "wv",
+    "wisconsin", "wi",
+    "wyoming", "wy"
+]   
+    df['Country'] = df['Country'].map(lambda x: 'United States' if x in usa_cities else x)
+    return df
+
+"""Arreglar profundidades negativas"""
 # Por valor absoluto
 def replace_negative_with_absolute(df):
     df['depth'] = df['depth'].abs()
@@ -76,35 +140,33 @@ def replace_negative_with_one(df):
     df.loc[df['depth'] < 0, 'depth'] = 1
     return df
 
-"""Rellenamos nulos con mediana"""
+"""Rellenar nulos con mediana"""
 def replace_null_with_median(df):
     median = df['mag'].median()
     df['mag'].fillna(median, inplace=True)
     return df
 
-"""Conversion de grados a km en dmin"""
+"""Convertir de grados a km en dmin"""
 def multiply_dmin(df):
     df['dmin'] = df['dmin'] * 111.2
     return df
 
-"""Rellenamos nulos con mediana"""
+"""Rellenar nulos con mediana"""
 def replace_null_with_median_dmin(df):
     median = df['dmin'].median()
     df['dmin'].fillna(median, inplace=True)
     return df
 
-"""Dejamos solo tipo terremoto y eliminamos la columna type"""
+"""Dejar solo terremotos"""
 def filter_records_by_type(df):
     df = df[df['earthquakeType'] == 'earthquake']
     return df
 
-def obtener_pais_desde_place(df):
-    df['country'] = df['place'].str.split(',').str[-1].str.strip()
-    return df
+#def obtener_pais_desde_place(df):
+#    df['country'] = df['place'].str.split(',').str[-1].str.strip()
+#    return df
 
-#####################################################################################################
-
-
+"""Crear dataset desde API"""
 def create_dataset(start_year, end_year):
 
     for year in range(start_year, end_year+1):
@@ -155,7 +217,8 @@ def create_dataset(start_year, end_year):
                     df = replace_null_with_median_dmin(df)
                     df = separar_coordenadas(df)
                     df = replace_negative_with_absolute(df)
-                    df = obtener_pais_desde_place(df)
+                    #df = obtener_pais_desde_place(df)
+                    df = process_place_data(df)
 
                     df.sort_values(by=['time'], ascending=True, inplace=True)
                     df1 = pd.concat([df1, df]).drop_duplicates().reset_index(drop=True)
