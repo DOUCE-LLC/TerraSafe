@@ -342,9 +342,6 @@ def loadAPI(min_year, max_year, min_eq_magnitude):
     df = dropDamageColumns(df)
     df = tsunamisAndVolcanos(df)
 
-    df.to_csv("../../Data/Cleaned data/NOAA.csv", index=False)
-    print('')
-
     # Define the bucket name and filename in the bucket
     bucket_name = "terrasafe"
     filename = "NOAA.csv"
