@@ -8,6 +8,9 @@ from datetime import datetime
 
 api_key = "5e97aa77f5324945a2863959710ee2ad"
 
+# Create a client for Cloud Storage
+client = storage.Client()
+
 """Funcion para eliminar columnas"""
 def remove_column(df, column_name):
     df.drop(column_name, axis=1, inplace=True)
