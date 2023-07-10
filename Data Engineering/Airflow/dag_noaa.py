@@ -1,59 +1,76 @@
-import json
-import requests
-import pandas as pd
-import numpy as np
+import airflow
+from airflow import DAG
+from airflow.operators.python_operator import PythonOperator
 from google.cloud import storage
 
-# Create a client for Cloud Storage
-client = storage.Client()
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
+import json
+import requests
+from datetime import datetime, timedelta
+import pandas as pd
+import numpy as np
+import io
+from io import BytesIO
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def dropUnnecessaryColumns(df):
     columns_to_drop = ['id', 'publish', 'regionCode', 'eqMagMw', 'eqMagMb', 'eqMagUnk', 'eqMagMl', 'eqMagMfa', 'eqMagMs', 'hour', 'second', 'minute', 'missing', 'missingAmountOrder', 'missingTotal', 'missingAmountOrderTotal', 'area']
+    
+    # Verificar la existencia de las columnas antes de eliminarlas
+    existing_columns = df.columns
+    columns_to_drop = [column for column in columns_to_drop if column in existing_columns]
     df.drop(columns=columns_to_drop, inplace=True)
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def dateColumn(df):
     df['year'].fillna(3000, inplace=True)
     df['month'].fillna(0, inplace=True)
     df['day'].fillna(0, inplace=True)
 
-    df['year'] = df['year'].astype(int)
-    df['month'] = df['month'].astype(int)
-    df['day'] = df['day'].astype(int)
+    df[['year', 'month', 'day']] = df[['year', 'month', 'day']].astype(int)     # Convertir las columnas 'year', 'month' y 'day' a tipo entero
 
-    df['year'] = df['year'].astype(str)
-    df['month'] = df['month'].astype(str)
-    df['day'] = df['day'].astype(str)
+    df.sort_values(by='year', ascending=True, inplace=True)                     # Ordenar el DataFrame por la columna 'year' de forma ascendente
+    df[['year', 'month', 'day']] = df[['year', 'month', 'day']].astype(str)     # Convertir las columnas 'year', 'month' y 'day' a tipo string
 
-    # Agregar ceros a las columnas 'month' y 'day' si tienen un solo dígito o son null/vacíos
-    df['month'] = df['month'].fillna('').apply(lambda x: str(x).zfill(2))
-    df['day'] = df['day'].fillna('').apply(lambda x: str(x).zfill(2))
-    
-    # Reemplazar los valores de año null/vacíos por 'null'
-    df['year'] = df['year'].fillna('null')
-    
-    # Concatenar las columnas year, month, y day en formato AAAA-MM-DD
-    df['date'] = df[['year', 'month', 'day']].agg('-'.join, axis=1)
-    
+    df['month'] = df['month'].fillna('').apply(lambda x: str(x).zfill(2))       # Agregar ceros a la columna 'month'si tiene un solo dígito o es null
+    df['day'] = df['day'].fillna('').apply(lambda x: str(x).zfill(2))           # Agregar ceros a la columna 'day' si tiene un solo dígito o es null
+    df['year'] = df['year'].fillna('').apply(lambda x: str(x).zfill(4))         # Agregar ceros a la columna 'year'si tiene un solo dígito o es null
+
+    df['date'] = df[['year', 'month', 'day']].agg('-'.join, axis=1)             # Concatenar las columnas year, month, y day en formato AAAA-MM-DD
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def dropDateColumns(df):
     df = df.drop(['year', 'month', 'day'], axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
 # Deaths columns...
 
 def updatedDeaths(df):
     df['updatedDeaths'] = df[['deathsTotal', 'deaths']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def updatedDeathsAmountOrder(df):
     df['updatedDeathsAmountOrder'] = df[['deathsAmountOrder', 'deathsAmountOrderTotal']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def dropDeathsColumns(df):
     df = df.drop(['deathsTotal', 'deaths', 'deathsAmountOrder', 'deathsAmountOrderTotal'], axis=1)
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedDeaths(df):
     # Operación 1: Llenar valores en updatedDeaths cuando updatedDeathsAmountOrder no es nulo y updatedDeaths es nulo
@@ -70,6 +87,8 @@ def fillUpdatedDeaths(df):
             elif row['updatedDeathsAmountOrder'] == 4:
                 df.at[index, 'updatedDeaths'] = 1000
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedDeaths2(df):
     # Operación 2: Rellenar valores en updatedDeathsAmountOrder si es nulo, según el rango correspondiente en updatedDeaths
@@ -88,19 +107,26 @@ def fillUpdatedDeaths2(df):
                 df.at[index, 'updatedDeathsAmountOrder'] = 4
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
 # Injuries columns...
 
 def updatedInjuries(df):
     df['updatedInjuries'] = df[['injuriesTotal', 'injuries']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def updatedInjuriesAmountOrder(df):
     df['updatedInjuriesAmountOrder'] = df[['injuriesAmountOrder', 'injuriesAmountOrderTotal']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def dropInjuriesColumns(df):
     df = df.drop(['injuriesTotal', 'injuries', 'injuriesAmountOrder', 'injuriesAmountOrderTotal'], axis=1)
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedInjuries(df):
     # Operación 1: Llenar valores en updatedInjuries cuando updatedInjuriesAmountOrder no es nulo y updatedInjuries es nulo
@@ -117,6 +143,8 @@ def fillUpdatedInjuries(df):
             elif row['updatedInjuriesAmountOrder'] == 4:
                 df.at[index, 'updatedInjuries'] = 1000
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedInjuries2(df):
     # Operación 2: Rellenar valores en updatedInjuriesAmountOrder si es nulo, según el rango correspondiente en updatedInjuries
@@ -135,19 +163,26 @@ def fillUpdatedInjuries2(df):
                 df.at[index, 'updatedInjuriesAmountOrder'] = 4
     return df
 
-# HousesDamaged columns...
+# --------------------------------------------------------------------------------------------------------------------------------------------
+# HousesDamaged columns... 
 
 def updatedHousesDamaged(df):
     df['updatedHousesDamaged'] = df[['housesDamagedTotal', 'housesDamaged']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def updatedHousesDamagedAmountOrder(df):
     df['updatedHousesDamagedAmountOrder'] = df[['housesDamagedAmountOrder', 'housesDamagedAmountOrderTotal']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def dropHousesDamagedColumns(df):
     df = df.drop(['housesDamagedTotal', 'housesDamaged', 'housesDamagedAmountOrder', 'housesDamagedAmountOrderTotal'], axis=1)
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedHousesDamaged(df):
     # Operación 1: Llenar valores en updatedHousesDamaged cuando updatedHousesDamagedAmountOrder no es nulo y updatedHousesDamaged es nulo
@@ -164,6 +199,8 @@ def fillUpdatedHousesDamaged(df):
             elif row['updatedHousesDamagedAmountOrder'] == 4:
                 df.at[index, 'updatedHousesDamaged'] = 1000
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedHousesDamaged2(df):
     # Operación 2: Rellenar valores en updatedHousesDamagedAmountOrder si es nulo, según el rango correspondiente en updatedHousesDamaged
@@ -182,19 +219,26 @@ def fillUpdatedHousesDamaged2(df):
                 df.at[index, 'updatedHousesDamagedAmountOrder'] = 4
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
 # HousesDestroyed columns...
 
 def updatedHousesDestroyed(df):
     df['updatedHousesDestroyed'] = df[['housesDestroyedTotal', 'housesDestroyed']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def updatedHousesDestroyedAmountOrder(df):
     df['updatedHousesDestroyedAmountOrder'] = df[['housesDestroyedAmountOrder', 'housesDestroyedAmountOrderTotal']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def dropHousesDestroyedColumns(df):
     df = df.drop(['housesDestroyedTotal', 'housesDestroyed', 'housesDestroyedAmountOrder', 'housesDestroyedAmountOrderTotal'], axis=1)
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedHousesDestroyed(df):
     # Operación 1: Llenar valores en updatedHousesDestroyed cuando updatedHousesDestroyedAmountOrder no es nulo y updatedHousesDestroyed es nulo
@@ -211,6 +255,8 @@ def fillUpdatedHousesDestroyed(df):
             elif row['updatedHousesDestroyedAmountOrder'] == 4:
                 df.at[index, 'updatedHousesDestroyed'] = 1000
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedHousesDestroyed2(df):
     # Operación 2: Rellenar valores en updatedHousesDestroyedAmountOrder si es nulo, según el rango correspondiente en updatedHousesDestroyed
@@ -229,19 +275,26 @@ def fillUpdatedHousesDestroyed2(df):
                 df.at[index, 'updatedHousesDestroyedAmountOrder'] = 4
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
 # Damage columns...
 
 def updatedDamage(df):
     df['updatedDamage'] = df[['damageMillionsDollarsTotal', 'damageMillionsDollars']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def updatedDamageAmountOrder(df):
     df['updatedDamageAmountOrder'] = df[['damageAmountOrder', 'damageAmountOrderTotal']].max(axis=1)
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def dropDamageColumns(df):
     df = df.drop(['damageMillionsDollarsTotal', 'damageMillionsDollars', 'damageAmountOrder', 'damageAmountOrderTotal'], axis=1)
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedDamage(df):
     # Operación 1: Llenar valores en updatedDamage cuando updatedDamageAmountOrder no es nulo y updatedDamage es nulo
@@ -258,6 +311,8 @@ def fillUpdatedDamage(df):
             elif row['updatedDamageAmountOrder'] == 4:
                 df.at[index, 'updatedDamage'] = 25.0
     return df
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
 def fillUpdatedDamage2(df):
     # Operación 2: Rellenar valores en updatedDamageAmountOrder si es nulo, según el rango correspondiente en updatedDamage
@@ -276,13 +331,58 @@ def fillUpdatedDamage2(df):
                 df.at[index, 'updatedDamageAmountOrder'] = 4
     return df
 
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
 def tsunamisAndVolcanos(df):
     columns = ['volcanoEventId', 'tsunamiEventId']
-    df[columns] = df[columns].fillna(0).astype(bool).astype(int)
+    
+    for column in columns:              # Verificar si las columnas existen en el DataFrame
+        if column not in df.columns:
+            df[column] = 0
+    
+    df[columns] = df[columns].astype(bool).astype(int)
     df.rename(columns={'volcanoEventId': 'volcano', 'tsunamiEventId': 'tsunami'}, inplace=True)
     return df
 
-def loadAPI(min_year, max_year, min_eq_magnitude):
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
+def deleteExistingFile(bucket_name, filename):
+
+    client = storage.Client()                   # Create a client for Cloud Storage
+    bucket = client.get_bucket(bucket_name)     # Get the bucket
+
+    blob = bucket.blob(filename)
+    if blob.exists():                           # Check if the file exists
+        blob.delete()                           # Delete the file
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------
+
+
+def loadNOAA():
+
+    bucket_name = 'terrasafe'
+    file_name = 'DAG_NOAA.csv'
+    noaa_date = 'last_noaa_date.csv'
+
+    deleteExistingFile(bucket_name, noaa_date)
+
+    storage_client = storage.Client()                                               # Create a Google Cloud Storage client
+    bucket = storage_client.get_bucket(bucket_name)                                 # Get the specified bucket
+    blob = bucket.blob(file_name)                                                   # Get the blob (file) from the bucket
+    data = blob.download_as_string()                                                # Download the file content as a string
+    df1 = pd.read_csv(io.BytesIO(data), encoding='utf-8')                           # Read the CSV data into a pandas DataFrame
+    last_row = str(df1['date'].tail(1).values[0])[:4]                               # Extract the last row's 'date' column value and keep only the first 4 characters
+    bucket.blob(noaa_date).upload_from_string(last_row, content_type='text/csv')    # Save the file last_noaa_date.csv to Cloud Storage
+
+
+    ##### LoadAPI() a partir de aquí...
+
+    min_year = last_row
+    max_year = datetime.now().year
+    min_eq_magnitude = 0
 
     api = "https://www.ngdc.noaa.gov/hazel/hazard-service/api/v1/earthquakes"
 
@@ -309,51 +409,65 @@ def loadAPI(min_year, max_year, min_eq_magnitude):
         record = json.loads(json.dumps(item))
         records.append(record)
 
-    df = pd.DataFrame(records)
+    df2 = pd.DataFrame(records)
 
     # Transformaciones...
-    df = dropUnnecessaryColumns(df)
-    df = dateColumn(df)
-    df = dropDateColumns(df)
-    df = updatedDeaths(df)
-    df = updatedDeathsAmountOrder(df)
-    df = fillUpdatedDeaths(df)
-    df = fillUpdatedDeaths2(df)
-    df = dropDeathsColumns(df)
-    df = updatedInjuries(df)
-    df = updatedInjuriesAmountOrder(df)
-    df = fillUpdatedInjuries(df)
-    df = fillUpdatedInjuries2(df)
-    df = dropInjuriesColumns(df)
-    df = updatedHousesDamaged(df)
-    df = updatedHousesDamagedAmountOrder(df)
-    df = fillUpdatedHousesDamaged(df)
-    df = fillUpdatedHousesDamaged2(df)
-    df = dropHousesDamagedColumns(df)
-    df = updatedHousesDestroyed(df)
-    df = updatedHousesDestroyedAmountOrder(df)
-    df = fillUpdatedHousesDestroyed(df)
-    df = fillUpdatedHousesDestroyed2(df)
-    df = dropHousesDestroyedColumns(df)
-    df = updatedDamage(df)
-    df = updatedDamageAmountOrder(df)
-    df = fillUpdatedDamage(df)
-    df = fillUpdatedDamage2(df)
-    df = dropDamageColumns(df)
-    df = tsunamisAndVolcanos(df)
+    df2 = dropUnnecessaryColumns(df2)
+    df2 = dateColumn(df2)
+    df2 = dropDateColumns(df2)
+    df2 = updatedDeaths(df2)
+    df2 = updatedDeathsAmountOrder(df2)
+    df2 = fillUpdatedDeaths(df2)
+    df2 = fillUpdatedDeaths2(df2)
+    df2 = dropDeathsColumns(df2)
+    df2 = updatedInjuries(df2)
+    df2 = updatedInjuriesAmountOrder(df2)
+    df2 = fillUpdatedInjuries(df2)
+    df2 = fillUpdatedInjuries2(df2)
+    df2 = dropInjuriesColumns(df2)
+    df2 = updatedHousesDamaged(df2)
+    df2 = updatedHousesDamagedAmountOrder(df2)
+    df2 = fillUpdatedHousesDamaged(df2)
+    df2 = fillUpdatedHousesDamaged2(df2)
+    df2 = dropHousesDamagedColumns(df2)
+    df2 = updatedHousesDestroyed(df2)
+    df2 = updatedHousesDestroyedAmountOrder(df2)
+    df2 = fillUpdatedHousesDestroyed(df2)
+    df2 = fillUpdatedHousesDestroyed2(df2)
+    df2 = dropHousesDestroyedColumns(df2)
+    df2 = updatedDamage(df2)
+    df2 = updatedDamageAmountOrder(df2)
+    df2 = fillUpdatedDamage(df2)
+    df2 = fillUpdatedDamage2(df2)
+    df2 = dropDamageColumns(df2)
+    df2 = tsunamisAndVolcanos(df2)
 
-    # Define the bucket name and filename in the bucket
-    bucket_name = "terrasafe"
-    filename = "NOAA.csv"
+    df_concat = pd.concat([df1, df2])                               # Concatenar los DataFrames
+    df = df_concat.drop_duplicates()                                # Eliminar elementos duplicados
 
-    # Convert DataFrame to CSV and store it in a string buffer
-    csv_buffer = pd.DataFrame.to_csv(df, index=False)
+    deleteExistingFile(bucket_name, file_name)                      # Delete the existing file
 
-    # Specify the bucket and file path in Cloud Storage
-    bucket = client.get_bucket(bucket_name)
-    blob = bucket.blob(filename)
+    client = storage.Client()                                       # Create a client for Cloud Storage
+    csv_buffer = pd.DataFrame.to_csv(df, index=False)               # Convert DataFrame to CSV and store it in a string buffer
+    bucket = client.get_bucket(bucket_name)                         # Specify the bucket in Cloud Storage
+    blob = bucket.blob(file_name)                                   # Specify the file_path in Cloud Storage
+    blob.upload_from_string(csv_buffer, content_type="text/csv")    # Upload the CSV data to the Cloud Storage bucket
 
-    # Upload the CSV data to the Cloud Storage bucket
-    blob.upload_from_string(csv_buffer, content_type="text/csv")
+# --------------------------------------------------------------------------------------------------------------------------------------------
 
-loadAPI(0, 2023, 0)
+default_args = {
+    'start_date': airflow.utils.dates.days_ago(0),
+}
+
+with DAG(
+    'noaa_dag',
+    default_args=default_args,
+    schedule_interval = '0 0 * * 0',
+    catchup = False,
+) as noaa_dag:
+
+    etl_noaa = PythonOperator(
+        task_id = "etl_noaa",
+        python_callable = loadNOAA
+    )
+    etl_noaa

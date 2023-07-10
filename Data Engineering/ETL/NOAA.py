@@ -2,8 +2,10 @@ import json
 import requests
 import pandas as pd
 import numpy as np
+from google.cloud import storage
 
-# Interfaz grafica: https://www.ngdc.noaa.gov/hazel/view/hazards/earthquake/search
+# Create a client for Cloud Storage
+client = storage.Client()
 
 def dropUnnecessaryColumns(df):
     columns_to_drop = ['id', 'publish', 'regionCode', 'eqMagMw', 'eqMagMb', 'eqMagUnk', 'eqMagMl', 'eqMagMfa', 'eqMagMs', 'hour', 'second', 'minute', 'missing', 'missingAmountOrder', 'missingTotal', 'missingAmountOrderTotal', 'area']
@@ -340,7 +342,18 @@ def loadAPI(min_year, max_year, min_eq_magnitude):
     df = dropDamageColumns(df)
     df = tsunamisAndVolcanos(df)
 
-    df.to_csv("../../Data/Cleaned data/NOAA.csv", index=False)
-    print('')
+    # Define the bucket name and filename in the bucket
+    bucket_name = "terrasafe"
+    filename = "NOAA.csv"
+
+    # Convert DataFrame to CSV and store it in a string buffer
+    csv_buffer = pd.DataFrame.to_csv(df, index=False)
+
+    # Specify the bucket and file path in Cloud Storage
+    bucket = client.get_bucket(bucket_name)
+    blob = bucket.blob(filename)
+
+    # Upload the CSV data to the Cloud Storage bucket
+    blob.upload_from_string(csv_buffer, content_type="text/csv")
 
 loadAPI(0, 2023, 0)
