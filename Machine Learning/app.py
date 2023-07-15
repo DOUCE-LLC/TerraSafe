@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.svm import SVC
 
-data_st = pd.read_csv('/Users/macbookpro/Desktop/TerraSafe/Machine Learning/noaa_ml.csv')  # Reemplaza 'datos_sismos.csv' con la ruta a tu archivo de datos
+data_st = pd.read_csv('./Machine Learning/noaa_ml.csv')  # Reemplaza 'datos_sismos.csv' con la ruta a tu archivo de datos
 
 data_st['clase_sismo'] = pd.qcut(data_st['magnitudSismo'], q=5, labels=['Muy Leve', 'Leve', 'Medio', "Fuerte", "Muy Fuerte"])
 
