@@ -5,6 +5,7 @@ from streamlit_option_menu import option_menu
 # paginas
 from Streamlit.home import Home
 from Streamlit.lstm import Lstm
+from Streamlit.polynomial import PolynomialRegression
 from Streamlit.svm import Svm
 from Streamlit.dashboards import Dashboards
 
@@ -23,6 +24,7 @@ selected = option_menu(None, ["Home", "Dashboards", "ML-LSTM", "ML-SVM"],
 
 # Home
 if selected == "Home":
+    PolynomialRegression()
     Home()
 
 # Análisis

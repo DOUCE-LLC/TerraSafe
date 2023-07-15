@@ -17,7 +17,7 @@ df = df.set_index('time')                                                       
 #----- Pre-procesamiento de los datos -----------------------------------------------------------------------------------------------------------
 
 set_entrenamiento = df['2023-01':'2023-05'].iloc[:,0:1]                         # Filter the data for the specified months
-set_validacion = df['2023-06'].iloc[:,0:1]                                      # Filter the data for the specified months
+set_validacion = df['2023-06'].iloc[:,0:0]                                      # Filter the data for the specified months
 
 #----- Normalización de los datos ------------------------------------------------------------------------------------------------------------
 
