@@ -24,7 +24,7 @@ bq_client = bigquery.Client()
 # Query your table
 query = f"""
             SELECT *
-            FROM `terra-safe-391718.AIRFLOW.USGS_JPN`
+            FROM `terrasafe-2.AIRFLOW.USGS_JPN`
             WHERE time > TIMESTAMP('2017-01-01') AND time < TIMESTAMP('2020-01-01')
             ORDER BY time ASC;
         """
@@ -100,7 +100,7 @@ print(df_predictions)
 
 query2 = f"""
             SELECT *
-            FROM `terra-safe-391718.AIRFLOW.USGS_JPN`
+            FROM `terrasafe-2.AIRFLOW.USGS_JPN`
             WHERE time > TIMESTAMP('2020-01-01') AND time < TIMESTAMP('2023-01-01')
             ORDER BY time ASC;
         """

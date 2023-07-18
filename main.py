@@ -16,7 +16,7 @@ st.markdown("""<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/d
             unsafe_allow_html=True)
 
 # Menu horizontal
-selected = option_menu(None, ["Home", "Dashboards", "Predictions", "ML-SVM"],
+selected = option_menu(None, ["Home", "Dashboards", "Predictions", "SVM"],
                         icons=['house', 'bi-archive', "bi-robot", "bi-robot"],
                         menu_icon="cast",
                         default_index=0,
@@ -31,10 +31,10 @@ if selected == "Home":
 elif selected == "Dashboards":
     Dashboards()
 
-# ML
+# Predictions
 elif selected == "Predictions":
     Sinusoidal()
 
-# New
-elif selected == "ML-SVM":
+# SVM
+elif selected == "SVM":
     Svm()
