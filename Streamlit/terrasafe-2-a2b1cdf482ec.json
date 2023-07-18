@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "terrasafe-2",
+  "private_key_id": "a2b1cdf482ecb23dffc97337067e97069c052ec8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCm1VsUIlRfBDe+\nmrZ2dZ4JfTGK7o5pzoxui4G0kFikiUHUzkSzzC+8VeixYfq8ciFpB+krJI6wwCY7\nKlEumASM7oM6SMHlpDbPeHwk4N5laiQY/WApsuHW97lcMpASTxZVJ9bqoYgZfC7N\nWgZIKq2koF+8FlSFJmqB3RmHJ5KtZs8GLtznYWPvO5G7GbMZwmH3GEtTRN29k/UR\nTKGM9hfK9Q6wI17XVV73Rcxg00YEAJtO1bjoseH8B8BxIbHjc6klbOPSklxFMvXV\nurJpzvfMWtgfRYUPeRSAB2M6GEqN7R1HnVm7bCqMDRUliV5oVTOdnSzzvrb1PilU\n3exhyYpbAgMBAAECggEAN3Y4SBI9kDTbv065l9n0Bt2KydASohQbVWilXvyZq2FB\n9Ff6OPeJawf4SnfzHhCnEL6jgkct9I58ZzDjOiUpZhyonYiwhQI5gnFge/YRmQ9X\nHsOk41fngkpqYb8hbCTEnNyYsvmuQCKrgHMMIZOmlFMIYIPf5z/lKnTxVqAOP/yi\n8BJ0nrk2zLOnCWpSTc/gOjBaY0cPMWp7uaq31j5TFJps9jSKkuc2M0ARpV1wPn5y\nCf+llix9Kj9YDp2vhDZLCI1VGHkeqM0/o2/mEAbl1wK5jAauKkiw0VcGDu823bMC\n86f6T7Nv9ULPcBWZTvnLoGUYtIPqcUP42cb8RCGQ0QKBgQDbggZYHi64koYaSi/+\n3bEZc9OfDJYYjSwUOeezSh9r6IEu3izI6MqyB4cwBZ8h4JaMwDT5gXky8QKc5WFA\nPR0hMg3jymNog/txa5CJ0qV00afvVJeJciRGNH9xDAE2nb2WIG7koTq1ox96siRO\nZ6ekJ267JSw0TQ1Mhb1ypopZeQKBgQDCkZKCKd5AFaCE5+n6Q4nZ0Gaox2ZrUYuA\nxUU2EQolGYgB41v35i2aAGoy9ttKkuQxcyXnrEmro3vVxbTVUMac1Rw3b6QHY9/8\nQggc0VZmEDTq/e5WCD9TTl1b33eDda4mwkiyIuEmCOoqANelJulijOjP6BASng6x\nGgAmgQDhcwKBgECklgG1QcURQXTUjDXeS51XQub/6ePpDyYVt2pRVdeNbR3ESCQS\nij7LgMBfp3Fulmd04yTnQC4EU+SomG82kDGKcBS5MXVCCPZp2vL7mcZBR9dvbgEI\nIC6cnztHccQHyCFCA+ZIpOWA2HBlrdN5KyFoi2+Jju8IEfaLHDN7YBrhAoGAI8uW\nUZ4URmP0MR9de25beRgPGvP8Urgg2yLv1b+SxzqIPBiw/c16DEARSakCtRiLJNHT\nYmje8NXV3YFPAIOo1oeadlRyr+1e8tDPH0YgCAzpP2ZSJ7/CrrfXEyTsnuHSlUzf\nBO7HzzCKrAmVosui2j+kQUOnWVV8zHZFGtBW8iMCgYEAz2aBnpdBF24dVwINgmFD\nhdcaZWpw2/bH6wpZbo8dSOA/UmiXZAxBQKxe4QN5bLaYx2bHFvJ6HTB/CJB/XGMy\n4O2wZFEDdlXJ6+H7m3YheuTUX4sdjBj13mnCdM4hEbfKfhfXLKwj/imPYGign3FA\nlJ1iue8z9Qfles5eIKwNVDI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "master@terrasafe-2.iam.gserviceaccount.com",
+  "client_id": "103638344485619211969",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/master%40terrasafe-2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

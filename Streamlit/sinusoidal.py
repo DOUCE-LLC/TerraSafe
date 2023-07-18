@@ -14,7 +14,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
 
 # Set the Google Cloud credentials
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Streamlit/terra-safe.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Streamlit/terrasafe-2-a2b1cdf482ec.json'
 
 # Create a BigQuery client with the credentials
 bq_client = bigquery.Client()
@@ -36,9 +36,6 @@ def generate_future_sinusoidal_features(X, num_days):
 def Sinusoidal():
     st.title('TerraSafe - Sinusoidal Regression')
 
-    st.write("A sinusoidal regression model is designed to capture cyclic patterns in data. The key to understanding the graph lies in comprehending the nature of sinusoidal functions. These functions follow the shape of a sine wave, which oscillates smoothly between maximum and minimum values over time.")
-    st.write("The concept of 'cyclicity' refers to the repeating nature of sinusoidal functions. Just like the changing seasons or the tides of the ocean, many natural phenomena exhibit cyclic behaviour. In the context of earthquakes, certain geological processes may exhibit cyclic patterns over time, suggesting the possibility of recurring seismic activities.")
-    st.write("Our model leverages the sinusoidal regression to estimate and predict the cyclic behaviour of future earthquakes. By analysing historical seismic data, the model identifies periodic patterns and projects them into the future, providing valuable insights for earthquake forecasting and risk assessment.")
     st.write("While you wait for the model to run the predictions, you can watch this amazing recap of the model's performance over the last 3 years...")
 
     image = Image.open("./Img/Senuidal.png")                        # Carga la imagen
@@ -103,7 +100,7 @@ def Sinusoidal():
     # # Get the future real data
     # query2 = f"""
     #             SELECT *
-    #             FROM `terrasafe-2.AIRFLOW.USGS_JPN`
+    #             FROM `terra-safe-391718.AIRFLOW.USGS_JPN`
     #             WHERE time > TIMESTAMP('2024-01-01') AND time < TIMESTAMP('2026-01-01')
     #             ORDER BY time ASC;
     #         """
@@ -122,8 +119,6 @@ def Sinusoidal():
     future_time_points_unix = generate_future_time_points(num_days, formatted_date)
 
     empty_y_values = [5] * len(future_time_points_unix)                            # Create an empty array for the Y-axis data of the predicted future points
-
-    st.subheader("Prediction:")
 
     # Plot the predictions for the future time points
     plt.figure(figsize=(10, 6))

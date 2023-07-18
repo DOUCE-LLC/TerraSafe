@@ -1,14 +1,12 @@
 import streamlit as st
-
-# # Page selection
-# page = st.sidebar.selectbox("Select Page", ("Home", "About", "Contact"))
-
-# # Home page
-# if page == "Home":
+from PIL import Image
 
 def Home():
     # Título de la página de inicio
     st.title('TerraSafe')
+
+    image = Image.open("./Img/TerraSafe.png")                       # Carga la imagen
+    st.image(image, caption="TerraSafe", use_column_width=True)     # Muestra la imagen en la aplicación
 
     # LSTM dropdown
     lstm_expanded = st.expander("LSTM (Long Short-Term Memory)")
