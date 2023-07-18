@@ -105,8 +105,8 @@ def process_place_data(df):
     df['country'] = df['place'].str.split(',', n=1).str[-1].str.strip().str.lower()
     df['country'] = df['country'].fillna(df['place'])  
     
-    # usa_cities = ["alabama", "california-nevada border region", '"sandywoods township, missouri"', 'the 1906 san francisco earthquake' "al", "alaska", "ak", "arizona", "az", "arkansas", "ar", "california", "ca", "colorado", "co", "connecticut", "ct", "delaware", "de", "florida", "fl", "georgia", "ga", "hawaii", "hi", "idaho", "id", "illinois", "il", "indiana", "in", "iowa", "ia", "kansas", "ks", "kentucky", "ky", "louisiana", "la", "maine", "me", "maryland", "md", "massachusetts", "ma", "michigan", "mi", "minnesota", "mn", "mississippi", "ms", "missouri", "mo", "montana", "mt", "nebraska", "ne", "nevada", "nv", "new hampshire", "nh", "new jersey", "nj", "new mexico", "nm", "new york", "ny", "north carolina", "nc", "north dakota", "nd", "ohio", "oh", "oklahoma", "ok", "oregon", "or", "pennsylvania", "pa", "rhode island", "ri", "south carolina", "sc", "south dakota", "sd", "tennessee", "tn", "texas", "tx", "utah", "ut", "vermont", "vt", "virginia", "va", "washington", "wa", "west virginia", "wv", "wisconsin", "wi", "wyoming", "wy"]   
-    # df['country'] = df['country'].map(lambda x: 'united states' if x in usa_cities else x)
+    usa_cities = ["alabama", "california-nevada border region", '"sandywoods township, missouri"', 'the 1906 san francisco earthquake' "al", "alaska", "ak", "arizona", "az", "arkansas", "ar", "california", "ca", "colorado", "co", "connecticut", "ct", "delaware", "de", "florida", "fl", "georgia", "ga", "hawaii", "hi", "idaho", "id", "illinois", "il", "indiana", "in", "iowa", "ia", "kansas", "ks", "kentucky", "ky", "louisiana", "la", "maine", "me", "maryland", "md", "massachusetts", "ma", "michigan", "mi", "minnesota", "mn", "mississippi", "ms", "missouri", "mo", "montana", "mt", "nebraska", "ne", "nevada", "nv", "new hampshire", "nh", "new jersey", "nj", "new mexico", "nm", "new york", "ny", "north carolina", "nc", "north dakota", "nd", "ohio", "oh", "oklahoma", "ok", "oregon", "or", "pennsylvania", "pa", "rhode island", "ri", "south carolina", "sc", "south dakota", "sd", "tennessee", "tn", "texas", "tx", "utah", "ut", "vermont", "vt", "virginia", "va", "washington", "wa", "west virginia", "wv", "wisconsin", "wi", "wyoming", "wy"]   
+    df['country'] = df['country'].map(lambda x: 'united states' if x in usa_cities else x)
     return df
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ def create_id_column(df):
 def create_dataset():
 
     client = bigquery.Client()                                                      # Create a Google Cloud Storage client 
-    table_ref = 'terra-safe-391718.AIRFLOW.USGS_JPN'                                # Specify your BigQuery table ID
+    table_ref = 'terrasafe-2.AIRFLOW.USGS_USA'                                # Specify your BigQuery table ID
 
     try:
         client.get_table(table_ref)                                                 # Check if the table exists
@@ -179,7 +179,7 @@ def create_dataset():
         schema = []                                                               # Empty schema field list
         table = bigquery.Table(table_ref, schema=schema)
         client.create_table(table)
-        last_row = {'max_year': 1906}
+        last_row = {'max_year': 1986}
     else:                                                                           # Table exists, execute the query to get the last_row
         query = f"""
         SELECT EXTRACT(YEAR FROM time) AS max_year
@@ -199,7 +199,7 @@ def create_dataset():
     for year in range(start_year, end_year+1):
         for month in range(1, 13):
 
-            url = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={year}-{month}-01&endtime={year}-{month}-31&minlatitude=24.396308&maxlatitude=45.551483&minlongitude=122.934570&maxlongitude=154.003906'
+            url = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={year}-{month}-01&endtime={year}-{month}-31&minlatitude=24.396308&maxlatitude=49.384358&minlongitude=-125.000000&maxlongitude=-66.934570'
             print(url)
             df = pd.DataFrame()
 
@@ -277,14 +277,14 @@ default_args = {
 }
 
 with DAG(
-    'DAG_USGS_JPN',
+    'DAG_USGS_USA',
     default_args=default_args,
     schedule_interval = '0 0 * * 0',
     catchup = False,
 ) as usgs_dag:
 
     etl_usgs = PythonOperator(
-        task_id = "DAG_USGS_JPN",
+        task_id = "DAG_USGS_USA",
         python_callable = create_dataset
     )
 

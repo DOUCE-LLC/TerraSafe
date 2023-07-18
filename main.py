@@ -4,10 +4,11 @@ from streamlit_option_menu import option_menu
 
 # paginas
 from Streamlit.home import Home
-from Streamlit.lstm import Lstm
-from Streamlit.polynomial import PolynomialRegression
+from Streamlit.sinusoidal import Sinusoidal
 from Streamlit.svm import Svm
 from Streamlit.dashboards import Dashboards
+
+import os
 
 # link necesario para bootstrap
 st.markdown("""<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -15,7 +16,7 @@ st.markdown("""<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/d
             unsafe_allow_html=True)
 
 # Menu horizontal
-selected = option_menu(None, ["Home", "Dashboards", "ML-LSTM", "ML-SVM"],
+selected = option_menu(None, ["Home", "Dashboards", "Predictions", "ML-SVM"],
                         icons=['house', 'bi-archive', "bi-robot", "bi-robot"],
                         menu_icon="cast",
                         default_index=0,
@@ -24,7 +25,6 @@ selected = option_menu(None, ["Home", "Dashboards", "ML-LSTM", "ML-SVM"],
 
 # Home
 if selected == "Home":
-    PolynomialRegression()
     Home()
 
 # Análisis
@@ -32,8 +32,8 @@ elif selected == "Dashboards":
     Dashboards()
 
 # ML
-elif selected == "ML-LSTM":
-    Lstm()
+elif selected == "Predictions":
+    Sinusoidal()
 
 # New
 elif selected == "ML-SVM":

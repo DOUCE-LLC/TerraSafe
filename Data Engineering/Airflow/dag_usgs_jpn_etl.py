@@ -171,7 +171,7 @@ def create_id_column(df):
 def create_dataset():
 
     client = bigquery.Client()                                                      # Create a Google Cloud Storage client 
-    table_ref = 'terra-safe-391718.AIRFLOW.USGS_CHI'                                # Specify your BigQuery table ID
+    table_ref = 'terrasafe-2.AIRFLOW.USGS_JPN'                                # Specify your BigQuery table ID
 
     try:
         client.get_table(table_ref)                                                 # Check if the table exists
@@ -179,7 +179,7 @@ def create_dataset():
         schema = []                                                               # Empty schema field list
         table = bigquery.Table(table_ref, schema=schema)
         client.create_table(table)
-        last_row = {'max_year': 1914}
+        last_row = {'max_year': 1906}
     else:                                                                           # Table exists, execute the query to get the last_row
         query = f"""
         SELECT EXTRACT(YEAR FROM time) AS max_year
@@ -199,7 +199,7 @@ def create_dataset():
     for year in range(start_year, end_year+1):
         for month in range(1, 13):
 
-            url = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={year}-{month}-01&endtime={year}-{month}-31&minlatitude=-56.0911&maxlatitude=-17.4987&minlongitude=-75.6440&maxlongitude=-66.0758'
+            url = f'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={year}-{month}-01&endtime={year}-{month}-31&minlatitude=24.396308&maxlatitude=45.551483&minlongitude=122.934570&maxlongitude=154.003906'
             print(url)
             df = pd.DataFrame()
 
@@ -277,14 +277,14 @@ default_args = {
 }
 
 with DAG(
-    'DAG_USGS_CHI',
+    'DAG_USGS_JPN',
     default_args=default_args,
     schedule_interval = '0 0 * * 0',
     catchup = False,
 ) as usgs_dag:
 
     etl_usgs = PythonOperator(
-        task_id = "DAG_USGS_CHI",
+        task_id = "DAG_USGS_JPN",
         python_callable = create_dataset
     )
 
