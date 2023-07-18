@@ -9,20 +9,18 @@ from sklearn.svm import SVC
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import seaborn as sns
 
 
 def Svm():
     # Título de la página de inicio
-    st.title('TerraSafe - SVM')
-
-    st.write("The Support Vector Machine (SVM) is a supervised learning algorithm that aims to find the optimal hyperplane to separate data into different classes. Support vectors are data points that are closest to the hyperplane and play a crucial role in constructing the classifier. The goal of SVM is to find the hyperplane that maximizes the margin between classes, providing good generalization ability and resistance to noisy data.")
-    st.write("In the context of seismic data processing, SVM can be used to classify earthquakes into different categories or levels of intensity (e.g. 'Low', 'Moderate', 'Strong', 'Major') based on relevant features such as earthquake magnitude, the amount of destroyed houses, and the number of registered deaths.")
-    st.write("SVM is a powerful tool for classifying data into different categories and can be used in the context of seismic data processing to predict the intensity of future earthquakes based on the provided features. By identifying cyclic patterns and relationships among the features, SVM can provide valuable information for earthquake forecasting and seismic risk assessment.")
+    #st.title('TerraSafe - SVM')
 
     # Configurar las credenciales de autenticación para BigQuery
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './Streamlit/terrasafe-2-a2b1cdf482ec.json'
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/Users/macbookpro/Desktop/TerraSafe/Streamlit/terra-safe.json'
+    
 
     # Crear un cliente de BigQuery con las credenciales
     bq_client = bigquery.Client()
@@ -68,5 +66,5 @@ def Svm():
                          min_value=0.0, max_value=10.0, step=0.1)
     prediction = svm_model.predict([[feature1, feature2, feature3]])
 
-    st.write(
-        'La etiqueta predicha para las características proporcionadas es:', prediction)
+    #st.write(
+        #'La etiqueta predicha para las características proporcionadas es:', prediction)
