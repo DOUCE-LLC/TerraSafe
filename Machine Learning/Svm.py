@@ -16,10 +16,10 @@ import seaborn as sns
 
 def Svm():
     # Título de la página de inicio
-    st.title('TerraSafe - SVM')
+    #st.title('TerraSafe - SVM')
 
     # Configurar las credenciales de autenticación para BigQuery
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '../Streamlit/terra-safe.json'
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/Users/macbookpro/Desktop/TerraSafe/Streamlit/terra-safe.json'
     
 
     # Crear un cliente de BigQuery con las credenciales
@@ -30,7 +30,7 @@ def Svm():
                 SELECT eqMagnitude, updatedDeathsAmountOrder, updatedHousesDestroyedAmountOrder
                 FROM `terrasafe-2.AIRFLOW.NOAA`
                 WHERE eqMagnitude IS NOT NULL AND updatedHousesDestroyedAmountOrder IS NOT NULL AND updatedDeathsAmountOrder IS NOT NULL
-                ORDER BY time ASC;
+                ORDER BY date ASC;
             """
     df = bq_client.query(query).to_dataframe()
 
@@ -66,5 +66,5 @@ def Svm():
                          min_value=0.0, max_value=10.0, step=0.1)
     prediction = svm_model.predict([[feature1, feature2, feature3]])
 
-    st.write(
-        'La etiqueta predicha para las características proporcionadas es:', prediction)
+    #st.write(
+        #'La etiqueta predicha para las características proporcionadas es:', prediction)
