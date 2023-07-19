@@ -172,7 +172,7 @@ def Sinusoidal():
 
 #----- Example of Sinusoidal Function -------------------------------------------------------------------------------------------------------------------------------------
 
-    image = Image.open("./Img/Fx_Sin.png")                                  # Open and load an image from the specified path './Img/Fx_Sin.png'.
-    st.image(image, caption="Example", use_column_width=True)               # Display the loaded image with an optional caption "Example". 'use_column_width=True' allows the image to be displayed with the width of the column in the application.
+    image = Image.open("./Img/Fx_Sin.png")                                              # Open and load an image from the specified path './Img/Fx_Sin.png'.
+    st.image(image, caption="Example of Sinusoidal Function", use_column_width=True)    # Display the loaded image with an optional caption "Example". 'use_column_width=True' allows the image to be displayed with the width of the column in the application.
 
 ### Matias Aguilar
