@@ -8,7 +8,7 @@ def Dashboards():
     image = Image.open("./Img/dash_1.jpeg")                       # Carga la imagen
     st.image(image, caption="", use_column_width=True)            # Muestra la imagen en la aplicación
 
-    st.markdown("[View Dashboard here...](https://lookerstudio.google.com/reporting/560da032-b939-4b78-a596-502e8e2591e8)")
+    st.markdown("[View Dashboard here...](https://lookerstudio.google.com/reporting/e5be3890-c51c-4a2f-9878-47130bde0271)")
 
     st.write("The TerraSafe Control Panel is an exceptional tool designed for decision-making in the management and planning of natural disasters caused by seismic movements. Its functionality and precision make it the perfect ally to face these challenges with efficiency and confidence.")
     st.write("This powerful system features real-time visualizations that allow you to observe the latest earthquakes recorded in Chile, the United States, Japan, and worldwide. Through a rapid identification system based on the magnitude of events, it provides valuable and up-to-date information instantly.")
@@ -24,7 +24,7 @@ def Dashboards():
     st.write("Don't risk uncertainty in the face of natural disasters. The TerraSafe Control Panel provides you with the confidence and capability to make informed and strategic decisions in critical situations. Contact us today and discover how this tool can make a difference in your response to natural disasters.")
 
     # Add a link
-    st.markdown("[View Dashboard here...](https://lookerstudio.google.com/reporting/560da032-b939-4b78-a596-502e8e2591e8)")
+    st.markdown("[View Dashboard here...](https://lookerstudio.google.com/reporting/e5be3890-c51c-4a2f-9878-47130bde0271)")
 
     image3 = Image.open("./Img/dash_3.jpeg")                       # Carga la imagen
     st.image(image3, caption="", use_column_width=True)            # Muestra la imagen en la aplicación
