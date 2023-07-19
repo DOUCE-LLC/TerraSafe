@@ -1,1 +1,0 @@
-# Este archivo explica la carpeta data analitics y que otros .md hay en esta doc

@@ -1,83 +1,83 @@
-# Información de los Terremotos en Todo el Mundo
+# Worldwide Earthquake Information 🌍📊
 
-¡Bienvenido al análisis de terremotos en todo el mundo! Aquí encontrarás una descripción divertida y formal de cada uno de los posibles KPIs a calcular basados en los datos de los archivos CSV de USGS.
+Welcome to the worldwide earthquake analysis! Here, you'll find a fun and formal description of each of the potential KPIs to be calculated based on USGS's CSV data files.
 
-## Columnas requeridas
+## Required Columns
 
-Antes de sumergirnos en los KPIs, los CSV contienen las siguientes columnas:
+Before we dive into the KPIs, the CSV files contain the following columns:
 
-- `time`: Registro de la fecha y hora del terremoto.
-- `latitude`: Coordenada de latitud del terremoto.
-- `longitude`: Coordenada de longitud del terremoto.
-- `depth`: Profundidad del terremoto bajo tierra.
-- `mag`: Magnitud del terremoto en una escala del 1 al 10.
-- `dmin`: Kilómetros a la redonda afectados por el terremoto.
-- `id`: Identificador único del terremoto.
-- `place`: Ubicación del terremoto.
-- `type`: Tipo de evento sísmico (terremoto o temblor).
+- `time`: Records the date and time of the earthquake.
+- `latitude`: Latitude coordinate of the earthquake.
+- `longitude`: Longitude coordinate of the earthquake.
+- `depth`: Depth of the earthquake beneath the ground.
+- `mag`: Magnitude of the earthquake on a scale from 1 to 10.
+- `dmin`: Kilometers around affected by the earthquake.
+- `id`: Unique identifier of the earthquake.
+- `place`: Location of the earthquake.
+- `type`: Type of seismic event (earthquake or tremor).
 
-Ahora, ¡vamos a los KPIs!
+Now, let's get to the KPIs!
 
-## 1. Número total de terremotos registrados
+## 1. Total Number of Recorded Earthquakes 📉
 
-Este KPI te proporciona el recuento total de terremotos en el archivo.
+This KPI provides you with the total count of earthquakes in the file.
 
-Columnas requeridas: `id`
+Required Columns: `id`
 
-## 2. Promedio de la magnitud de los terremotos
+## 2. Average Magnitude of Earthquakes 📏
 
-Calcula el promedio de la magnitud de todos los terremotos registrados.
+Calculate the average magnitude of all recorded earthquakes.
 
-Columnas requeridas: `mag`
+Required Columns: `mag`
 
-## 3. Porcentaje de terremotos de alta magnitud
+## 3. Percentage of High-Magnitude Earthquakes ⚡️
 
-Este KPI te muestra el porcentaje de terremotos que tuvieron una magnitud mayor a 7 en una escala del 1 al 10.
+This KPI shows you the percentage of earthquakes that had a magnitude greater than 7 on a scale from 1 to 10.
 
-Columnas requeridas: `mag`
+Required Columns: `mag`
 
-## 4. Distribución geográfica de los terremotos
+## 4. Geographical Distribution of Earthquakes 🗺️
 
-Analiza la distribución geográfica de los terremotos y muestra en qué continentes o regiones son más frecuentes.
+Analyze the geographical distribution of earthquakes and show which continents or regions are most affected.
 
-Columnas requeridas: `latitude`, `longitude`
+Required Columns: `latitude`, `longitude`
 
-## 5. Número de terremotos por tipo
+## 5. Number of Earthquakes by Type 🌪️
 
-Calcula el número de terremotos y temblores en el archivo para obtener una visión general de los eventos sísmicos.
+Calculate the number of earthquakes and tremors in the file to get an overview of seismic events.
 
-Columnas requeridas: `type`
+Required Columns: `type`
 
-## 6. Profundidad promedio de los terremotos
+## 6. Average Depth of Earthquakes 🌌
 
-Este KPI te proporciona la profundidad promedio de los terremotos registrados.
+This KPI provides you with the average depth of recorded earthquakes.
 
-Columnas requeridas: `depth`
+Required Columns: `depth`
 
-## 7. Top 5 de los lugares más afectados por terremotos
+## 7. Top 5 Most Affected Places by Earthquakes 🏞️
 
-Identifica los cinco lugares más afectados por terremotos y muestra su frecuencia.
+Identify the five most affected places by earthquakes and display their frequency.
 
-Columnas requeridas: `place`
+Required Columns: `place`
 
-## 8. Variación de la magnitud de los terremotos a lo largo del tiempo
+## 8. Magnitude Variation of Earthquakes Over Time 📈
 
-Analiza la variación de la magnitud de los terremotos a lo largo del tiempo para identificar tendencias o patrones.
+Analyze the variation in earthquake magnitudes over time to identify trends or patterns.
 
-Columnas requeridas: `time`, `mag`
+Required Columns: `time`, `mag`
 
-## 9. Relación entre la magnitud y la profundidad de los terremotos
+## 9. Relationship Between Magnitude and Depth of Earthquakes 🔍
 
-Estudia la relación entre la magnitud y la profundidad de los terremotos para determinar si existe alguna correlación.
+Study the relationship between the magnitude and depth of earthquakes to determine if any correlation exists.
 
-Columnas requeridas: `mag`, `depth`
+Required Columns: `mag`, `depth`
 
-## 10. Porcentaje de terremotos que afectaron una distancia significativa
+## 10. Percentage of Earthquakes that Affected a Significant Distance 📍
 
-Calcula el porcentaje de terremotos que afectaron una distancia mayor a 100 km en comparación con la distancia total cubierta por todos los terremotos.
+Calculate the percentage of earthquakes that affected a distance greater than 100 km compared to the total distance covered by all earthquakes.
 
-Columnas requeridas: `dmin`
+Required Columns: `dmin`
 
-¡Diviértete explorando estos KPIs y descubre interesantes insights sobre los terremotos en todo el mundo!
+Have fun exploring these KPIs and discover interesting insights about earthquakes worldwide!
 
-Recuerda ajustar las instrucciones según las necesidades específicas de tus datos y tu análisis. ¡Feliz análisis!
+Remember to adjust the instructions according to the specific needs of your data and analysis. Happy analyzing! 🚀🔍

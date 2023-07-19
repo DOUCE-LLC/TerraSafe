@@ -1,84 +1,115 @@
-# Descripción de las columnas de la API del NOAA
+# Unveiling the Enchanting Mysteries of Seismic Data! 🌍🌋📊
 
-A continuación se describe cada una de las columnas presentes en la muestra de datos de la API del NOAA.
+Welcome, brave data adventurers, to a grand journey through the captivating world of seismic data from the illustrious NOAA API! Prepare yourselves as we embark on an Exploratory Data Analysis (EDA) like no other, armed with the power of Pandas Profiling! 🚀🔍💻
 
-## Columnas:
+## Dataset Description 🗒️🔍
 
-- `id`: Identificador único del terremoto.
-- `year`: Año en que ocurrió el terremoto.
-- `month`: Mes en que ocurrió el terremoto.
-- `day`: Día del mes en que ocurrió el terremoto.
-- `hour`: Hora en que ocurrió el terremoto.
-- `minute`: Minuto en que ocurrió el terremoto.
-- `second`: Segundo en que ocurrió el terremoto.
-- `locationName`: Nombre de la ubicación del terremoto.
-- `latitude`: Coordenada de latitud del terremoto.
-- `longitude`: Coordenada de longitud del terremoto.
-- `eqDepth`: Profundidad del terremoto.
-- `eqMagnitude`: Magnitud del terremoto.
-- `intensity`: Intensidad del terremoto.
-- `deaths`: Número de muertes causadas por el terremoto.
-- `deathsAmountOrder`: Orden de cantidad de muertes en relación con otros terremotos.
-- `damageAmountOrder`: Orden de cantidad de daños en relación con otros terremotos.
-- `tsunamiEventId`: Identificador único del evento de tsunami asociado al terremoto.
-- `eqMagMs`: Magnitud del terremoto calculada utilizando el método de ondas sísmicas superficiales.
-- `eqMagMb`: Magnitud del terremoto calculada utilizando el método de ondas sísmicas corporales.
-- `publish`: Indicador de si los datos del terremoto están publicados.
-- `deathsTotal`: Total acumulado de muertes causadas por el terremoto y otros eventos (tsunami, explosiones, etc).
-- `deathsAmountOrderTotal`: Orden de cantidad total de muertes en relación con otros terremotos.
-- `damageAmountOrderTotal`: Orden de cantidad total de daños en relación con otros terremotos.
-- `country`: País donde ocurrió el terremoto.
-- `regionCode`: Código de región donde ocurrió el terremoto.
+Behold the raw seismic data, a treasure trove of 25 columns that hold the secrets of earthquakes, their impact, and their locations! Each column offers unique insights, but some carry the allure of mystery, with the occasional presence of missing values. Fear not, for we shall conquer these challenges!
 
-Valores nulos por columna (porcentaje):
-id                                  0.000000
-year                                0.000000
-month                               1.766630
-day                                 2.791712
-hour                               16.292257
-locationName                        0.021810
-latitude                            0.043621
-longitude                           0.043621
-eqMagnitude                         0.000000
-eqDepth                            27.350055
-damageAmountOrder                  23.860414
-damageMillionsDollars              87.873501
-publish                             0.000000
-housesDestroyedAmountOrderTotal    63.249727
-country                             0.021810
-deathsAmountOrder                  54.242094
-injuriesAmountOrderTotal           65.256270
-intensity                          51.952017
-<!-- housesDestroyedAmountOrder         64.754635 -->
-<!-- tsunamiEventId                     67.851690 -->
-<!-- volcanoEventId                     99.018539 -->
-<!-- eqMagMs                            35.005453 -->
-<!-- deathsTotal                        61.330425 -->
-<!-- deathsAmountOrderTotal             55.441658 -->
-<!-- damageAmountOrderTotal             30.861505 -->
-<!-- housesDestroyedTotal               81.286805 -->
-<!-- regionCode                          0.000000 -->
-<!-- minute                             18.189749 -->
-<!-- second                             22.355507 -->
-<!-- deaths                             60.588877 -->
-<!-- injuriesAmountOrder                65.757906 -->
-<!-- eqMagMw                            64.405671 -->
-<!-- eqMagMb                            60.000000 -->
-<!-- housesDamagedAmountOrder           78.146129 -->
-<!-- housesDamagedAmountOrderTotal      79.738277 -->
-<!-- housesDestroyed                    81.962923 -->
-<!-- injuries                           70.447110 -->
-<!-- housesDamaged                      88.222465 -->
-<!-- injuriesTotal                      69.945474 -->
-<!-- housesDamagedTotal                 89.182116 -->
-<!-- eqMagMl                            95.812432 -->
-<!-- damageMillionsDollarsTotal         88.069793 -->
-<!-- area                               94.329335 -->
-<!-- missingAmountOrderTotal            99.323882 -->
-<!-- eqMagUnk                           82.878953 -->
-<!-- missing                            99.476554 -->
-<!-- missingAmountOrder                 99.454744 -->
-<!-- missingTotal                       99.411123 -->
-<!-- eqMagMfa                           99.694656 -->
+## Columns at a Glance 👀📜
 
-Esta descripción te ayudará a comprender el significado de cada columna en los datos obtenidos de la API del NOAA. Utiliza esta información para realizar análisis y obtener insights relevantes sobre los terremotos.
+1. **ID** 🆔
+   - Description: A unique identifier of the earthquake.
+   - Null Percentage: 0.00%
+
+2. **Year** 🗓️
+   - Description: The year in which the earthquake occurred.
+   - Null Percentage: 0.00%
+
+3. **Month** 🌟
+   - Description: The month in which the earthquake occurred.
+   - Null Percentage: 1.77%
+
+4. **Day** 📅
+   - Description: The day of the month on which the earthquake occurred.
+   - Null Percentage: 2.79%
+
+5. **Hour** ⌛
+   - Description: The hour at which the earthquake occurred.
+   - Null Percentage: 16.29%
+
+6. **Minute** ⏰
+   - Description: The minute at which the earthquake occurred.
+   - Null Percentage: 18.19%
+
+7. **Second** ⏱️
+   - Description: The second at which the earthquake occurred.
+   - Null Percentage: 22.36%
+
+8. **Location Name** 📍
+   - Description: The name of the earthquake location.
+   - Null Percentage: 0.02%
+
+9. **Latitude** 🌐
+   - Description: The latitude coordinate of the earthquake.
+   - Null Percentage: 0.04%
+
+10. **Longitude** 🌐
+    - Description: The longitude coordinate of the earthquake.
+    - Null Percentage: 0.04%
+
+11. **Earthquake Depth** 🚀
+    - Description: The depth of the earthquake in km.
+    - Null Percentage: 27.35%
+
+12. **Earthquake Magnitude** 🌋
+    - Description: The magnitude of the earthquake.
+    - Null Percentage: 0.00%
+
+13. **Intensity** 🏞️
+    - Description: The intensity of the earthquake (Mercalli Intensity Scale).
+    - Null Percentage: 51.95%
+
+14. **Deaths** ☠️
+    - Description: The number of deaths caused by the earthquake.
+    - Null Percentage: 60.59%
+
+15. **Deaths Amount Order** ☠️📈
+    - Description: The order of death count compared to other earthquakes.
+    - Null Percentage: 54.24%
+
+16. **Damage Amount Order** 💥📈
+    - Description: The order of damage count compared to other earthquakes.
+    - Null Percentage: 23.86%
+
+17. **Tsunami Event ID** 🌊🆔
+    - Description: Unique identifier of the associated tsunami event.
+    - Null Percentage: 67.85%
+
+18. **Earthquake Magnitude (MS)** 🌋📏
+    - Description: Earthquake magnitude using surface wave analysis.
+    - Null Percentage: 35.01%
+
+19. **Earthquake Magnitude (Mb)** 🌋📏
+    - Description: Earthquake magnitude using body wave analysis.
+    - Null Percentage: 60.00%
+
+20. **Publish** 📰
+    - Description: Indicator of whether earthquake data is published.
+    - Null Percentage: 0.00%
+
+21. **Total Deaths** ☠️📈
+    - Description: Accumulated total deaths caused by the earthquake and other events.
+    - Null Percentage: 61.33%
+
+22. **Total Deaths Amount Order** ☠️📈
+    - Description: The order of total death count compared to other earthquakes.
+    - Null Percentage: 55.44%
+
+23. **Total Damage Amount Order** 💥📈
+    - Description: The order of total damage count compared to other earthquakes.
+    - Null Percentage: 30.86%
+
+24. **Country** 🌍
+    - Description: The country where the earthquake occurred.
+    - Null Percentage: 0.02%
+
+25. **Region Code** 🗺️🔢
+    - Description: The region code where the earthquake occurred.
+    - Null Percentage: 0.00%
+
+## Fear Not the Missing Values! 🕵️‍♀️🔍
+
+As we tread deeper into the realm of seismic data, we must acknowledge the presence of missing values in some columns. Fear not, for we shall confront these gaps with grace and statistical prowess during our EDA journey!
+
+Brave souls, fasten your seatbelts, and let us set forth to unravel the wondrous mysteries of seismic data with Pandas Profiling as our guiding star! 🚀🌟📊

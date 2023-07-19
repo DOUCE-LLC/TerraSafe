@@ -1,23 +1,25 @@
-# Información de los Terremotos en Todo el Mundo
+# Worldwide Earthquake Information 🌍📉
 
-¡Bienvenido al análisis de terremotos en todo el mundo! Aquí encontrarás una descripción divertida y formal de cada uno de los posibles KPIs a calcular basados en los datos de los archivos CSV de NOAA.
+Welcome to the worldwide earthquake analysis! Here, you'll find a fun and formal description of each of the potential KPIs to be calculated based on NOAA's CSV data files.
 
-## 1. Reducción de muertes a travez del tiempo. 
+## 1. ⏬ Decrease in Deaths Over Time.
 
-Ejemplo: reducción del 2% anual.
+Example: Decrease of 2% annually. 📉
 
-## 2. Reducción de heridos a travez del tiempo. 
+## 2. ⏬ Decrease in Injuries Over Time.
 
-Ejemplo: reducción del 2% anual.
+Example: Decrease of 2% annually. 📉
 
-## 3. Reducción de gastos en usd a travez del tiempo. 
+## 3. ⏬ Decrease in USD Expenses Over Time.
 
-Ejemplo: reducción del 2% anual.
+Example: Decrease of 2% annually. 📉
 
-## 4. Reducción de casas destruidas a travez del tiempo. 
+## 4. ⏬ Decrease in Destroyed Houses Over Time.
 
-Ejemplo: reducción del 2% anual.
+Example: Decrease of 2% annually. 📉
 
-## 5. Reducción de casas dañadas a travez del tiempo. 
+## 5. ⏬ Decrease in Damaged Houses Over Time.
 
-Ejemplo: reducción del 2% anual.
+Example: Decrease of 2% annually. 📉
+
+Let's dive into the fascinating world of seismic data and explore these exciting trends! 🚀🔍
