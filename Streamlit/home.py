@@ -8,36 +8,10 @@ def Home():
     image = Image.open("./Img/TerraSafe.png")                       # Carga la imagen
     st.image(image, caption="TerraSafe", use_column_width=True)     # Muestra la imagen en la aplicación
 
-    # LSTM dropdown
-    lstm_expanded = st.expander("LSTM (Long Short-Term Memory)")
-    with lstm_expanded:
-        st.write("LSTM is a type of recurrent neural network (RNN) that is specifically designed to capture and model long-term dependencies in sequential data, such as earthquake time series. Unlike traditional feedforward neural networks, LSTM has the ability to retain and utilize information from previous time steps, making it well-suited for predicting the future cyclic behavior of earthquakes. By training an LSTM model on historical earthquake data, we can estimate the future patterns and cyclic trends in seismic activity, which can be invaluable for understanding earthquake dynamics and aiding in earthquake forecasting and risk assessment.")
+    st.subheader("Welcome to the Terra Safe platform! On this website, you'll discover a collection of powerful tools designed to assist governments worldwide and organizations like the Red Cross. With advanced machine learning systems, interactive dashboards, and automated data extraction, we're here to make a difference!")
+    st.write("Our first machine learning model within Terra Safe aims to predict the behaviour of future earthquake cycles in specific regions. This capability allows us to allocate resources efficiently during peak cycles for disaster relief and, during the minimums, invest in infrastructure and early warning systems to mitigate future damages.")
+    st.write("Moreover, we offer another machine learning system for earthquake classification. By inputting earthquake characteristics, this system efficiently categorizes them, enabling us to prioritize aid distribution effectively.")
+    st.write("Our platform also boasts an interactive dashboard powered by Looker. Continuously updated with new earthquake data, this dashboard offers detailed worldwide seismic analysis, giving valuable insights into earthquake patterns.")
+    st.write("Lastly, we've implemented a robust system to control data extraction and transformation for new earthquake records. Our user-friendly interface on Airflow runs seamlessly on Google Cloud Platform (GCP), ensuring updated data feeds into our machine learning systems and dashboards. For added security, we've set up a backup cloud with virtual machines to guarantee access to the most current data, even in unforeseen circumstances.")
+    st.subheader("At Terra Safe, we combine cutting-edge technology with a touch of simplicity to make a real impact in earthquake preparedness and response. Together, let's build a safer and resilient world!")
 
-    # SVM dropdown
-    svm_expanded = st.expander("SVM (Support Vector Machine)")
-    with svm_expanded:
-        st.write("SVM is a machine learning algorithm used for classification tasks, including earthquake classification. It works by finding an optimal hyperplane that separates different classes of earthquakes based on their features. SVM is particularly useful for earthquake classification because it can handle high-dimensional feature spaces and is effective in handling both linear and non-linear relationships in the data. By using SVM, we can accurately classify earthquakes based on their characteristics and make informed decisions regarding their severity and potential impact.")
-
-    # Imagen y enlace para el modelo LSTM
-    lstm_image = './Img/LSTM.jpeg'
-    lstm_url = './Streamlit/LSTM.py'
-
-    # Imagen y enlace para el modelo SVM
-    svm_image = './Img/SVM.png'
-    svm_url = './Streamlit/LSTM.py'
-
-    # Mostrar las imágenes y enlazarlas a las páginas correspondientes
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.image(lstm_image, use_column_width=True)
-        st.markdown(f'<h4 style="text-align: center">LSTM</h4>', unsafe_allow_html=True)
-
-    with col2:
-        st.image(svm_image, use_column_width=True)
-        st.markdown(f'<h4 style="text-align: center">SVM</h4>', unsafe_allow_html=True)
-
-# # About page
-# elif page == "About":
-#     st.title("About Page")
-#     st.write("This is the About Page!")

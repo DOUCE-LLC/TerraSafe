@@ -7,6 +7,7 @@ from Streamlit.home import Home
 from Streamlit.sinusoidal import Sinusoidal
 from Streamlit.svm import Svm
 from Streamlit.dashboards import Dashboards
+from Streamlit.etl import Etl
 
 import os
 
@@ -16,8 +17,8 @@ st.markdown("""<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/d
             unsafe_allow_html=True)
 
 # Menu horizontal
-selected = option_menu(None, ["Home", "Dashboards", "Predictions", "SVM"],
-                        icons=['house', 'bi-archive', "bi-robot", "bi-robot"],
+selected = option_menu(None, ["Home", "Dash", "Predict", "SVM", "ETL"],
+                        icons=['house', 'bi-bar-chart', "bi-graph-up-arrow", "bi-globe-americas", "bi-hammer"],
                         menu_icon="cast",
                         default_index=0,
                         orientation="horizontal",
@@ -28,13 +29,17 @@ if selected == "Home":
     Home()
 
 # Análisis
-elif selected == "Dashboards":
+elif selected == "Dash":
     Dashboards()
 
 # Predictions
-elif selected == "Predictions":
+elif selected == "Predict":
     Sinusoidal()
 
 # SVM
 elif selected == "SVM":
     Svm()
+
+# ETL
+elif selected == "ETL":
+    Etl()

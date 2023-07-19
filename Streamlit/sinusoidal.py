@@ -21,7 +21,7 @@ bq_client = bigquery.Client()
 
 # Define function for sinusoidal features
 def sinusoidal_features(X):
-    frequency = 2 * np.pi / (365.25 * 24 * 3600)  # Frequency for one year in seconds
+    frequency = 2 * np.pi / (365.25 * 24 * 3600)            # Frequency for one year in seconds
     sinusoidal_X = np.hstack([np.sin(X), np.cos(X)])
     return sinusoidal_X
 
