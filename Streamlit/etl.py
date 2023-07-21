@@ -10,7 +10,7 @@ def Etl():
 
     image = Image.open("./Img/Airflow.png")                                               # Carga la imagen
     st.image(image, caption="Airflow interface", use_column_width=True)                             # Muestra la imagen en la aplicación
-    st.markdown("[View Airflow here...](https://c58d3a1928649666ap-tp.appspot.com/home)")
+    st.markdown("[View Airflow here...]()")
 
     st.write("But hold on, we've got more in store for you! We know flexibility is crucial, so we've added nifty sliders that give you control. If you ever need to conserve cloud resources, simply slide those buttons to the left, and voilà! Your data extraction takes a little break, keeping everything in check.")
     st.write("Now, let's talk about speed. We've got you covered! Each task on our platform comes with its very own 'Play' button. If you're eager for immediate updates, go ahead and hit 'Play' – it's like pressing the refresh button on your browser but for our data.")
