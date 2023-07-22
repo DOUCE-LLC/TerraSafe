@@ -1,5 +1,0 @@
-El primer modelo de aprendizaje automático basado en cálculos matemáticos nos permite estimar el comportamiento cíclico futuro de los terremotos. Es decir, no predice la hora exacta ni la magnitud precisa de cada terremoto, pero identifica periodos donde se prevé un aumento en las magnitudes y la destructividad, y otros periodos donde la intensidad de los terremotos disminuirá.
-
-Este modelo nos permite asignar los recursos de manera eficiente en función del ciclo sísmico. Durante la cumbre del ciclo, los recursos deben destinarse a ayudas y reconstrucciones. Mientras que, durante el valle del ciclo, los recursos deben dirigirse hacia inversiones en infraestructura y sistemas de alerta temprana.
-
-Esta capacidad predictiva proporciona conocimientos valiosos para tomar decisiones informadas sobre la asignación de recursos y la preparación ante desastres, mejorando así nuestra capacidad para mitigar el impacto de los terremotos en las comunidades y la infraestructura.
