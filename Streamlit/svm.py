@@ -130,7 +130,7 @@ def Svm():
     svm_model = SVC(kernel='linear', C=1)
     svm_model.fit(X_train_scaled, y_train)
 
-    st.write('Ingrese las características del sismo para predecir la etiqueta:')
+    st.write('Enter the earthquake characteristics to predict the label:')
 
     feature1 = st.slider('Magnitude', min_value=0.0, max_value=10.0, step=0.1)
     feature2 = st.slider('Deaths', min_value=0.0, max_value=4.0, step=1.0)
@@ -142,4 +142,4 @@ def Svm():
 
     prediction = svm_model.predict([[feature1, feature2, feature3, feature4, feature5, feature6, feature7]])
 
-    st.write('La etiqueta predicha para las características proporcionadas es:', prediction)
+    st.write('The predicted label for the provided features is:', prediction)
