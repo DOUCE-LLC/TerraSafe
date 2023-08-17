@@ -1,0 +1,23 @@
+syntax = "proto3";
+message ProtocolBuffer {
+  string locationName = 1;
+  float latitude = 2;
+  float longitude = 3;
+  float eqMagnitude = 4;
+  int32 tsunami = 5;
+  int32 volcano = 6;
+  string country = 7;
+  float eqDepth = 8;
+  float intensity = 9;
+  string date = 10;
+  float updatedDeaths = 11;
+  float updatedDeathsAmountOrder = 12;
+  float updatedInjuries = 13;
+  float updatedInjuriesAmountOrder = 14;
+  float updatedHousesDamaged = 15;
+  float updatedHousesDamagedAmountOrder = 16;
+  float updatedHousesDestroyed = 17;
+  float updatedHousesDestroyedAmountOrder = 18;
+  float updatedDamage = 19;
+  float updatedDamageAmountOrder = 20;
+}

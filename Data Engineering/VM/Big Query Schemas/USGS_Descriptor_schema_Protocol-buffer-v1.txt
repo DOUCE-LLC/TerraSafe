@@ -1,0 +1,17 @@
+syntax = "proto3";
+message ProtocolBuffer {
+  timestamp time = 1;
+  float mag = 2;
+  float cdi = 3;
+  float mmi = 4;
+  float dmin = 5;
+  string place = 6;
+  string earthquakeType = 7;
+  float sig = 8;
+  int32 tsunami = 9;
+  float longitude = 10;
+  float latitude = 11;
+  float depth = 12;
+  string country = 13;
+  string id_e = 14;
+}
